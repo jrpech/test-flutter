@@ -10,6 +10,9 @@ import 'dart:convert' as convert;
 abstract class ApiBase {
   final Duration timeout;
   final String endPoint;
+  String apiKey = "";
+  String token = "";
+  String typeAuth = "";
 
   ApiBase(String endPoint, {this.timeout = const Duration(seconds: 30)})
       : this.endPoint = endPoint;
@@ -20,11 +23,12 @@ abstract class ApiBase {
 
   Future<http.Response> get(String url) async {
     var headers = {
-      'api_key': 'stage_HNYh3RaK_Test',
+      'api_key': apiKey,
       'Content-Type': 'application/x-www-form-urlencoded',
-      "Authorization":
-          "Bearer XWtkk2t86Dr-BIDH9vhM-TLO4iR_OsF6c121cRggcIPUKV-_EI7yzpT6I2pFVQ8khmktgXBty4Hbkgj_CzZACzwK1BHv_GPwljKmTWhq-1Dba6p-9BPj8kmNiljy491Utkt4Ql2Sr9c8z3dOlWE6DnbPrCN-tov8f7KVsiyLq1h1HjU1TELUYq7GBx0wR1AGOmss-RqqyqzQ0NhsKfAp39lnwCYbFziyA8y0ceww1UdfDs0X126g3UUkk01pqoyqlQFi8pd66J4gtTNeBBOSrAOFl8FG0xFzjvayj8L2gxMyca9tLe5MCuX6JAu6mSZZ8V8GGNvTmIjr4zZpGPEwKBlFXqD0nFHKEVGsMCd6G5gB4VTBwSPgnzCNaQWXnqEwwZ1qaA"
+      "Authorization": "Bearer " + token
     };
+
+    print(headers);
 
     final response =
         await http.get(serviceUrl(url), headers: headers).timeout(this.timeout);
@@ -78,13 +82,5 @@ abstract class ApiBase {
     } else {
       throw ServerError(response.body, response.statusCode);
     }
-  }
-
-  set token(String token) {
-    //this.headers[HttpHeaders.authorizationHeader] = "Bearer " + token;
-  }
-
-  get token {
-    //return this.headers[HttpHeaders.authorizationHeader];
   }
 }

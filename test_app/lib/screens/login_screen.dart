@@ -22,18 +22,10 @@ class LoginScreen extends StatelessWidget {
             userRepository: userRepository,
           );
         },
-        child: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(
-                    "assets/images/background.jpg",
-                  ),
-                  fit: BoxFit.fill),
-            ),
-            child: Scaffold(
-              backgroundColor: Colors.black54,
-              body: SingleChildScrollView(child: LoginForm()),
-            )),
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          body: SingleChildScrollView(child: LoginForm()),
+        ),
       ),
     );
   }

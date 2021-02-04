@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_app/blocs/user/user_bloc.dart';
 import 'package:test_app/providers/payloads/profile_response.dart';
 import 'package:test_app/repositories/user.dart';
-import 'package:test_app/screens/profile_info.dart';
+import 'package:test_app/routes.dart';
+import 'package:test_app/widgets/profile/profile_info.dart';
 
 class ProfileScreen extends StatelessWidget {
   final _cardController = TextEditingController();
@@ -31,12 +32,16 @@ class ProfileScreen extends StatelessWidget {
                             decoration: InputDecoration(
                               labelText: 'Capturar tarjeta',
                             ),
-                            keyboardType: TextInputType.emailAddress,
+                            keyboardType: TextInputType.number,
                             controller: _cardController,
                           ),
                           RaisedButton(
                             color: Colors.blue,
-                            onPressed: null,
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, Routes.seachTransactions,
+                                  arguments: _cardController.text);
+                            },
                             child: SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.75,
                                 child: Text('Buscar transacciones',

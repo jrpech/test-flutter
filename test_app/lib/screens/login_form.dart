@@ -31,7 +31,14 @@ class _LoginFormState extends State<LoginForm> {
 
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
-        print("BlocListener");
+        if (state is LoginLoading) {
+          Scaffold.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Validando credenciales...'),
+              backgroundColor: Colors.blue,
+            ),
+          );
+        }
 
         if (state is LoginFailure) {
           Scaffold.of(context).showSnackBar(
@@ -52,14 +59,17 @@ class _LoginFormState extends State<LoginForm> {
           );
         }
 
-        return Form(
+        return Center(
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-              Text("Ingresa a", style: TextStyle(fontSize: 20)),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
+                height: MediaQuery.of(context).size.height * 0.05,
+              ),
+              Image.asset("imgs/logo-test.png"),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.05,
               ),
               Text("Ingresa sus credenciales para acceder"),
               new Container(
@@ -83,7 +93,8 @@ class _LoginFormState extends State<LoginForm> {
               ),
               RaisedButton(
                 color: Colors.blue,
-                onPressed: _onLoginButtonPressed,
+                onPressed:
+                    state is! LoginLoading ? _onLoginButtonPressed : null,
                 child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.75,
                     child: Text('Ingresar',

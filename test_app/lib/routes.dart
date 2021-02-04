@@ -15,6 +15,7 @@ class Routes {
   static const seachTransactions = "/search";
 
   static MaterialPageRoute getRoute(RouteSettings settings) {
+    //Routes defined to show screens and session valitation.
     switch (settings.name) {
       case Routes.seachTransactions:
         return MaterialPageRoute(

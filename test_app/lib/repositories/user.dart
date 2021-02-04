@@ -36,9 +36,11 @@ class UserRepository {
         response = await provider.getProfile();
 
         try {
-          //localProvider.saveUser(response);
-          final test = await localProvider.existUser();
-          print(test.email);
+          localProvider.deleteUser();
+          await localProvider.saveUser(response);
+          //print(resSave);
+          //final test = await localProvider.existUser();
+          //print(test);
         } catch (ex) {
           print("ERROR: " + ex.toString());
         }

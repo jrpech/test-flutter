@@ -11,9 +11,13 @@ import 'package:test_app/screens/splash_page.dart';
 class Routes {
   static const root = "/";
   static const home = "/home";
+  static const seachTransactions = "/search";
 
   static MaterialPageRoute getRoute(RouteSettings settings) {
     switch (settings.name) {
+      case Routes.seachTransactions:
+        return MaterialPageRoute(
+            builder: (_) => RegisterPage(), settings: settings);
       case Routes.home:
         return MaterialPageRoute(
             builder: (_) =>

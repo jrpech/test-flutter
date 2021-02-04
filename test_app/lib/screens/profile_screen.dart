@@ -6,6 +6,8 @@ import 'package:test_app/repositories/user.dart';
 import 'package:test_app/screens/profile_info.dart';
 
 class ProfileScreen extends StatelessWidget {
+  final _cardController = TextEditingController();
+
   final UserRepository userRepository;
   ProfileScreen(this.userRepository);
 
@@ -18,7 +20,34 @@ class ProfileScreen extends StatelessWidget {
                 UserBloc(userRepository)..add(FetchRemoteInfo()),
             child: BlocBuilder<UserBloc, UserState>(builder: (context, state) {
               if (state is ProfileLoaded) {
-                return ProfileInfo(ProfileResponse(firstName: "JORGE"));
+                return ListView(children: [
+                  ProfileInfo(state.user),
+                  Center(
+                    child: Container(
+                      width: 300,
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            decoration: InputDecoration(
+                              labelText: 'Capturar tarjeta',
+                            ),
+                            keyboardType: TextInputType.emailAddress,
+                            controller: _cardController,
+                          ),
+                          RaisedButton(
+                            color: Colors.blue,
+                            onPressed: null,
+                            child: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.75,
+                                child: Text('Buscar transacciones',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(color: Colors.white))),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ]);
               }
 
               if (state is ProfileLoading) {

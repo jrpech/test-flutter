@@ -16,7 +16,6 @@ class LocalProvider {
       "CREATE TABLE " +
           _TABLE +
           " ("
-              "id TEXT KEY, "
               "email TEXT, "
               "first_name TEXT, "
               "last_name TEXT, "
@@ -44,6 +43,7 @@ class LocalProvider {
   Future<ProfileResponse> existUser() async {
     final db = await this.database;
     final maps = await db.query(_TABLE, limit: 1);
+    print(maps);
 
     if (maps.isEmpty) {
       return null;
@@ -65,14 +65,16 @@ class LocalProvider {
 
   Future<int> saveUser(ProfileResponse user) async {
     final Database db = await database;
-    deleteUser();
+    //deleteUser();
     final userMap = user.toJson();
-    userMap['id'] = user.email;
 
-    return db.insert(
+    await db.insert(
       _TABLE,
       userMap,
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+
+    print(await existUser());
+    return 1;
   }
 }

@@ -17,15 +17,16 @@ class UserRepository {
   UserRepository(this.localProvider);
 
   static const String _persistKey = "user_token";
+  static const String _persistTypeAuth = "type_token";
   static const String _persistUserKey = "user_username";
 
-  Future<String> authenticate({
+  Future<AuthResponse> authenticate({
     String username,
     String password,
   }) async {
     AuthResponse response = await provider.login(username, password);
     print(response);
-    return "66576fytfgiytb&vr65r76bt6t67"; //response.token;
+    return response;
   }
 
   Future<ProfileResponse> getProfile() async {
@@ -33,14 +34,15 @@ class UserRepository {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult != ConnectivityResult.none) {
       try {
+        provider.token = await getPersistedToken();
+        provider.typeAuth = await getPersistedTypeToken();
+        print(provider.token);
         response = await provider.getProfile();
+        print(response);
 
         try {
           localProvider.deleteUser();
           await localProvider.saveUser(response);
-          //print(resSave);
-          //final test = await localProvider.existUser();
-          //print(test);
         } catch (ex) {
           print("ERROR: " + ex.toString());
         }
@@ -51,6 +53,7 @@ class UserRepository {
         response = await localProvider.existUser();
         print("ServerError");
       } catch (error) {
+        print(error);
         throw error;
       }
     } else {
@@ -74,6 +77,12 @@ class UserRepository {
     return;
   }
 
+  Future<void> persistType(String typeToken) async {
+    SharedPreferences storage = await SharedPreferences.getInstance();
+    await storage.setString(_persistTypeAuth, typeToken);
+    return;
+  }
+
   Future<bool> hasToken() async {
     SharedPreferences storage = await SharedPreferences.getInstance();
     String value = storage.getString(_persistKey);
@@ -83,6 +92,11 @@ class UserRepository {
   Future<String> getPersistedToken() async {
     SharedPreferences storage = await SharedPreferences.getInstance();
     return storage.getString(_persistKey);
+  }
+
+  Future<String> getPersistedTypeToken() async {
+    SharedPreferences storage = await SharedPreferences.getInstance();
+    return storage.getString(_persistTypeAuth);
   }
 
   void setToken() async {

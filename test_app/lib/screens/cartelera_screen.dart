@@ -14,7 +14,6 @@ class CarteleraScreen extends StatelessWidget {
             color: Colors.white,
             onPressed: () async {
               BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
-              Navigator.of(context).pop();
             },
           )
         ],

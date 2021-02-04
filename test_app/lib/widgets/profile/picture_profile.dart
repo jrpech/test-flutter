@@ -4,16 +4,10 @@ class PictureProdfile extends StatelessWidget {
   final String picture;
   PictureProdfile(this.picture);
 
-  Image isLocalAvatar() {
-    if (this.picture.isEmpty) {
-      return Image.asset("");
-    } else {
-      return Image.network("");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    String avatarOnline =
+        "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png";
     final sizeImage = MediaQuery.of(context).size.height * 0.2;
     return Container(
         width: sizeImage,
@@ -22,6 +16,8 @@ class PictureProdfile extends StatelessWidget {
             border: Border.all(color: Colors.blue, width: 3),
             shape: BoxShape.circle,
             image: new DecorationImage(
-                fit: BoxFit.fill, image: NetworkImage(picture))));
+                fit: BoxFit.fill,
+                image:
+                    NetworkImage((picture.isEmpty ? avatarOnline : picture)))));
   }
 }

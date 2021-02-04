@@ -5,6 +5,7 @@ import 'package:test_app/blocs/authentication/authentication_bloc.dart';
 import 'package:test_app/blocs/tab/tab_bloc.dart';
 import 'package:test_app/repositories/user.dart';
 import 'package:test_app/screens/app_screen.dart';
+import 'package:test_app/screens/card_transactions.dart';
 import 'package:test_app/screens/login_screen.dart';
 import 'package:test_app/screens/splash_page.dart';
 
@@ -17,7 +18,7 @@ class Routes {
     switch (settings.name) {
       case Routes.seachTransactions:
         return MaterialPageRoute(
-            builder: (_) => RegisterPage(), settings: settings);
+            builder: (_) => CardTransactions(), settings: settings);
       case Routes.home:
         return MaterialPageRoute(
             builder: (_) =>

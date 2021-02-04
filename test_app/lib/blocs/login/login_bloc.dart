@@ -49,10 +49,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           final response = await userRepository.authenticate(
               username: event.username, password: event.password);
 
-          print(authenticationBloc);
-
-          authenticationBloc
-              .add(LoggedIn(token: response, username: event.username));
+          authenticationBloc.add(LoggedIn(data: response));
 
           yield LoginInitial(
               validPassword: this._isPasswordValid(event.password),

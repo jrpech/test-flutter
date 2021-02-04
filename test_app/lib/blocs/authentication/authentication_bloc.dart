@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:test_app/providers/payloads/auth_response.dart';
 import 'package:test_app/repositories/user.dart';
 
 part 'authentication_event.dart';
@@ -37,9 +38,9 @@ class AuthenticationBloc
 
     if (event is LoggedIn) {
       yield AuthenticationLoading();
-      await userRepository.persistToken(event.token);
-      //await userRepository.setUser(event.username);
-      yield AuthenticationAuthenticated(userName: event.username);
+      await userRepository.persistToken(event.data.accessToken);
+      await userRepository.persistType(event.data.tokenType);
+      yield AuthenticationAuthenticated(userName: event.data.userName);
     }
 
     if (event is LoggedOut) {

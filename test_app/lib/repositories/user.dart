@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:connectivity/connectivity.dart';
-import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_app/constants.dart';
 import 'package:test_app/providers/api.dart';
